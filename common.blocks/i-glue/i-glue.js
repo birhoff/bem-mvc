@@ -1,13 +1,14 @@
+modules.define('i-glue', ['i-bem__dom', 'objects', 'jquery', 'i-model'],
+function(provide, BEMDOM, objects, $, MODEL) {
+
 /**
  * Блок для проклеивания моделей и DOM
+ * @class i-glue
  */
-BEM.DOM.decl('i-glue', {
-
+provide(BEMDOM.decl(this.name, {
     onSetMod: {
         js: function() {
-
             this.glue();
-
         }
     },
 
@@ -33,9 +34,9 @@ BEM.DOM.decl('i-glue', {
             model;
 
         if (data) {
-            model = BEM.MODEL.create(mParams, data);
+            model = MODEL.create(mParams, data);
         } else {
-            model = BEM.MODEL.getOrCreate(mParams);
+            model = MODEL.getOrCreate(mParams);
         }
 
         this.model = model;
@@ -62,11 +63,12 @@ BEM.DOM.decl('i-glue', {
 
     /**
      * Инициализируем блок i-glue-field (или его потомка) на BEM-блоке
-     * @param {jQuery} elem
+     * @param {jquery} elem
      * @returns {BEM}
      */
     initFieldBlock: function(elem) {
-        elem = this.elemify(elem, 'model-field'); // идентифицируем элемент для случая, когда на одной ноде несколько элементов
+        elem = this.elemify(elem, 'model-field'); // идентифицируем элемент для случая, когда на одной ноде
+                                                  // несколько элементов
 
         var elemParams = this.elemParams(elem) || {};
 
@@ -78,7 +80,7 @@ BEM.DOM.decl('i-glue', {
             fieldParams.type || (fieldParams.type = this.getMod(elem, 'type'));
 
             var type = fieldParams.type,
-                block = new BEM.DOM.blocks['i-glue-field' + (type ? '_type_' + type : '')](elem, fieldParams, true);
+                block =  new BEMDOM.blocks['i-glue-field' + (type ? '_type_' + type : '')](elem, fieldParams, true);
 
             this._fields[fieldParams.name] = this._fields[fieldParams.name] || [];
             this._fields[fieldParams.name].push(block);
@@ -126,6 +128,7 @@ BEM.DOM.decl('i-glue', {
 
     /**
      * Возвращает путь к модели, соответствующей данному блоку
+     * @public
      * @returns {String}
      */
     getModelPath: function() {
@@ -153,6 +156,6 @@ BEM.DOM.decl('i-glue', {
 
         this.__base.apply(this, arguments);
     }
-
-
-});
+}))
+}
+);

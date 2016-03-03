@@ -1,10 +1,15 @@
-BEM.DOM.decl({ block: 'i-glue-field_type_mod', baseBlock: 'i-glue-field' }, {
-    onSetMod: {
-        js: function() {
-            this.__base();
+modules.define('i-glue-field', ['i-bem__dom'], function(provide, BEMDOM) {
 
-            this._gluedBlock = this[this.params.elem ? 'findBlockOutside' : 'findBlockOn'](this.domElem, this.params.block || this.__self.getName());
-            this._gluedElem = this.params.elem && this._gluedBlock.findElem(this.domElem, this.params.elem);
+provide(BEMDOM.decl({ block: 'i-glue-field_type_mod', baseBlock: 'i-glue-field' }, {
+
+    onSetMod: {
+        js: {
+            inited: function() {
+                this.__base();
+
+                this._gluedBlock = this[this.params.elem ? 'findBlockOutside' : 'findBlockOn'](this.domElem, this.params.block || this.__self.getName());
+                this._gluedElem = this.params.elem && this._gluedBlock.findElem(this.domElem, this.params.elem);
+            }
         }
     },
 
@@ -18,9 +23,11 @@ BEM.DOM.decl({ block: 'i-glue-field_type_mod', baseBlock: 'i-glue-field' }, {
         var modVal = this.model.get(this.name);
 
         if (this._fieldType == 'boolean')
-            modVal = modVal ? 'yes' : '';
+            modVal = modVal ? true : false;
 
         this._gluedBlock.setMod(this._gluedElem, this.params.modName, modVal);
     }
+
+}));
 
 });

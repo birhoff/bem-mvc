@@ -36,21 +36,20 @@
  * }
  */
 
-block i-model {
-
-    default, this._modelAggregation: {
+block('i-model')(
+    def().match(function() { return this._modelAggregation; })(function() {
         this._modelAggregatorData.push(apply('get-params'));
-    }
+    }),
 
-    default: {
+    def()(function() {
         this.ctx.js = { data: apply('get-params') };
 
-        applyNext();
-    }
+        return applyNext();
+    }),
 
-    get-params: {
+    mode('get-params')(function() {
         var ctx = this.ctx;
-        
+
         if (ctx.modelsParams) return ctx.modelsParams;
         if (ctx.modelParams) return ctx.modelParams;
 
@@ -69,10 +68,9 @@ block i-model {
         }
 
         return params;
-    }
+    }),
 
-    attrs: {
+    attrs()({
         style: 'display: none'
-    }
-
-}
+    })
+);

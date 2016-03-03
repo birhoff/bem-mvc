@@ -1,11 +1,16 @@
-(function(BEM) {
-    var MODEL = BEM.MODEL;
+modules.define(
+    'model',
+    ['inherit'],
+    function(provide, inherit, MODEL) {
 
-    MODEL.FIELD.decl('id', {
+        MODEL.FIELD.types.id = inherit(MODEL.FIELD, {
 
-        isEmpty: function() {
-            return true;
-        }
+            isEmpty: function() {
+                return true;
+            }
+
+        });
+
+        provide(MODEL);
 
     });
-})(BEM);

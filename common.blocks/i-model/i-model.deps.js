@@ -2,7 +2,10 @@
     mustDeps: [
     ],
     shouldDeps: [
-        { elem: 'utils' },
+        {
+            block: 'functions',
+            elems: ['throttle', 'debounce']
+        },
         { elem: 'core' },
         {
             elem: 'field',

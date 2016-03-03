@@ -1,31 +1,34 @@
 {
   "author": "",
   "name": "bem-mvc",
-  "version": "0.0.1",
+  "version": "2.0.0",
   "repository": {
     "type": "git",
     "url": "git://github.com/bem/bem-mvc.git"
   },
+  "bugs": "https://github.com/bem/bem-mvc/issues",
+  "private": true,
   "engines": {
-    "node": "0.6 | 0.7 | 0.8 | 0.9 | 0.10"
+    "node": ">=0.10"
   },
   "dependencies": {
-    "bem": "0.6.x",
-    "bem-environ": "1.0.x"
+    "bem-environ": "~1.4.0"
   },
   "devDependencies": {
-    "chai": "^3.2.0",
-    "jscs": "^1.3.0",
-    "jshint": "^2.4.4",
-    "mocha": "^2.2.5",
-    "sinon": "^1.15.4",
-    "sinon-chai": "^2.8.0"
+    "bem": "~0.8.0",
+    "bower-npm-install": "~0.5.4",
+    "enb-bem-docs": "git://github.com/andrewblond/enb-bem-docs.git#6b1544a8f3e516eaee3303cf84131e773868eb2b",
+    "enb": "0.10.0",
+    "enb-diverse-js": "0.1.0",
+    "enb-modules": "0.1.1",
+    "enb-bemxjst": "1.1.1",
+    "enb-roole": "0.2.1",
+    "enb-autoprefixer": "0.1.0",
+    "bem-tools-autoprefixer": "0.0.3",
+    "roole": "~0.9.0"
   },
   "scripts": {
-    "postinstall": "./node_modules/.bin/bem make desktop.bundles/universal/_universal.js",
-    "test": "./node_modules/.bin/mocha ./tests/specs/**/**/*.spec.js ./tests/specs/**/**/**/*.spec.js ./tests/specs/**/**/**/**/*.spec.js",
-    "build+test": "npm run postinstall && npm run test",
-    "lint": "./node_modules/.bin/jshint ./common.blocks; ./node_modules/jscs/bin/jscs ./common.blocks"
-  },
-  "private": true
+    "deps": "bower-npm-install --non-interactive",
+    "build": "enb make docs -n && enb make"
+  }
 }

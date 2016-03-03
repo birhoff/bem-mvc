@@ -1,8 +1,13 @@
-BEM.DOM.decl({ block: 'i-glue-field_type_input', baseBlock: 'i-glue-field' }, {
+modules.define('i-glue-field', ['i-bem__dom'], function(provide, BEMDOM) {
+
+provide(BEMDOM.decl({ block: 'i-glue-field_type_input', baseBlock: 'i-glue-field' }, {
+
     onSetMod: {
-        js: function() {
-            this.__base();
-            this.input = this.findBlockOn('input');
+        js: {
+            inited: function() {
+                this.__base();
+                this.input = this.findBlockOn('input');
+            }
         }
     },
 
@@ -11,20 +16,22 @@ BEM.DOM.decl({ block: 'i-glue-field_type_input', baseBlock: 'i-glue-field' }, {
 
         this.input
             .on('change', function() {
-                this.model.set(this.name, this.input.val());
+                this.model.set(this.name, this.input.getVal());
             }, this)
             .on('blur', function() {
-                this.input.val(this.model.get(this.name, 'format'));
+                this.input.setVal(this.model.get(this.name, 'format'));
             }, this);
     },
 
     set: function(value) {
         this.__base();
-        this.input.val(value);
+        this.input.setVal(value);
     },
 
     onFieldChange: function(e, data) {
-        this.input.getMod('focused') !== 'yes' && this.input.val(data.value);
+        this.input.hasMod('focused') || this.input.setVal(data.value);
     }
+
+}));
 
 });

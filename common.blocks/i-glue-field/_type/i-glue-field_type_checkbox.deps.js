@@ -4,4 +4,4 @@
             block: 'checkbox'
         }
     ]
-})
+});

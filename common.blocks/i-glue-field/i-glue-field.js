@@ -1,4 +1,9 @@
-BEM.DOM.decl('i-glue-field', {
+modules.define('i-glue-field', ['i-bem__dom'], function(provide, BEMDOM) {
+
+/**
+ * @class i-glue-field
+ */
+provide(BEMDOM.decl('i-glue-field', {
 
     onSetMod: {
         js: function() {
@@ -51,5 +56,6 @@ BEM.DOM.decl('i-glue-field', {
 
         this.__base.apply(this, arguments);
     }
+}))
 
 });
