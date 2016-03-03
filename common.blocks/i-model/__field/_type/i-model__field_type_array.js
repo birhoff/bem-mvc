@@ -1,4 +1,4 @@
-modules.define('model', ['inherit', 'objects'], function(provide, inherit, objects, MODEL) {
+modules.define('model', ['inherit', 'objects', 'lodash'], function(provide, inherit, objects, MODEL, _) {
 
     MODEL.FIELD.types.array = inherit(MODEL.FIELD, {
 
@@ -94,7 +94,7 @@ modules.define('model', ['inherit', 'objects'], function(provide, inherit, objec
          * Внутренний метод выставления значения
          * @param {*} value значение
          * @param {Object} opts доп. параметры
-         * @returns {BEM.MODEL.FIELD}
+         * @returns {MODEL.FIELD}
          * @private
          */
         _set: function(value, opts) {
@@ -154,6 +154,11 @@ modules.define('model', ['inherit', 'objects'], function(provide, inherit, objec
                 });
 
             return res;
+        },
+
+        // Lodash extensions
+        remove: function(value) {
+
         }
 
     });
