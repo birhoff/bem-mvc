@@ -4,7 +4,7 @@ modules.define(
     function(provide, inherit, events, objects, functions, MODEL) {
         /**
          * @namespace
-         * @name BEM.MODEL.FIELD
+         * @name MODEL.FIELD
          */
         MODEL.FIELD = inherit(events.Emitter, {
 
@@ -12,7 +12,7 @@ modules.define(
              * @class Конструктор поля модели
              * @constructs
              * @param {Object} params
-             * @param {BEM.MODEL} model
+             * @param {MODEL} model
              * @private
              */
             __constructor: function(params, model) {
@@ -29,7 +29,7 @@ modules.define(
              * На модели генерируется событие с приставкой field-[имя события]
              * @param {String} event имя события
              * @param {Object} opts доп. параметры
-             * @returns {BEM.MODEL.FIELD}
+             * @returns {MODEL.FIELD}
              * @private
              */
             _trigger: function(event, opts) {
@@ -43,7 +43,7 @@ modules.define(
 
             /**
              * Инициализация поля
-             * @returns {BEM.MODEL.FIELD}
+             * @returns {MODEL.FIELD}
              * @private
              */
             _init: function() {
@@ -79,7 +79,7 @@ modules.define(
 
             /**
              * Кешериуем текущее состояние
-             * @returns {BEM.MODEL.FIELD}
+             * @returns {MODEL.FIELD}
              */
             fixData: function() {
                 this._fixedValue = this.get();
@@ -89,7 +89,7 @@ modules.define(
 
             /**
              * Восстанавливает закешированое значение поля
-             * @returns {BEM.MODEL.FIELD}
+             * @returns {MODEL.FIELD}
              */
             rollback: function() {
                 this.set(this._fixedValue, { rollback: true });
@@ -101,7 +101,7 @@ modules.define(
              * Устанавливает значение поля
              * @param {*} value значение для установки
              * @param {Object} [opts] доп. параметры доступные в обработчике события change
-             * @returns {BEM.MODEL.FIELD}
+             * @returns {MODEL.FIELD}
              */
             set: function(value, opts) {
                 if (!(opts && opts.isInit) && this.isEqual(value)) return this;
@@ -113,7 +113,7 @@ modules.define(
              * Внутренний метод выставления значения
              * @param {*} value значение
              * @param {Object} opts доп. параметры
-             * @returns {BEM.MODEL.FIELD}
+             * @returns {MODEL.FIELD}
              * @private
              */
             _set: function(value, opts) {
@@ -135,7 +135,7 @@ modules.define(
             /**
              * Выставляет пустое или дефолтное (если указано) значение поля
              * @param {Object} [opts] доп. параметры
-             * @returns {BEM.MODEL.FIELD}
+             * @returns {MODEL.FIELD}
              */
             clear: function(opts) {
                 this.set(undefined, opts);
@@ -401,7 +401,7 @@ modules.define(
              * Создает поле модели
              * @param {String} name имя поля
              * @param {Object} params параметры
-             * @param {BEM.MODEL} model экземпляр модели в которой создается поле
+             * @param {MODEL} model экземпляр модели в которой создается поле
              * @returns {*}
              */
             create: function(name, params, model) {

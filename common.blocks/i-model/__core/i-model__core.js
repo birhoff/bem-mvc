@@ -10,9 +10,9 @@ modules.define('model',
             modelsGroupsCache = {},
 
             /**
-             * Ядро. Реализует глобальный BEM.MODEL, его статические методы и базовый класс
+             * Ядро. Реализует глобальный MODEL, его статические методы и базовый класс
              * @namespace
-             * @name BEM.MODEL
+             * @name MODEL
              */
             MODEL;
 
@@ -33,7 +33,7 @@ modules.define('model',
              * @param {String} [modelParams.parentPath] путь родительской модели
              * @param {Object} [modelParams.parentModel] экземпляр родительской модели
              * @param {Object} [data] данные для инициализации полей модели
-             * @returns {BEM.MODEL}
+             * @returns {MODEL}
              * @private
              */
             __constructor: function(modelParams, data) {
@@ -72,15 +72,14 @@ modules.define('model',
             /**
              * Инициализирует поля модели
              * @param {Object} data данные для инициализации полей модели
-             * @returns {BEM.MODEL}
+             * @returns {MODEL}
              * @private
              */
             _initFields: function(data) {
                 var name = this.name,
-                    decl = MODEL.decls[name],
                     _this = this;
 
-                this.fieldsDecl = decl;
+                this.fieldsDecl = MODEL.decls[name];
                 this.fields = {};
 
                 this
@@ -112,7 +111,7 @@ modules.define('model',
              * Вычиляет заначения зависимых полей
              * @param {String} name имя поля
              * @param {Object} opts дополнительные парметры доступные в обработчиках событий
-             * @returns {BEM.MODEL}
+             * @returns {MODEL}
              * @private
              */
             _calcDependsTo: function(name, opts) {
@@ -169,7 +168,7 @@ modules.define('model',
              * @param {String} name имя поля
              * @param {*} value значение
              * @param {Object} [opts] дополнительные парметры доступные в обработчиках событий change
-             * @returns {BEM.MODEL}
+             * @returns {MODEL}
              */
             set: function(name, value, opts) {
                 var field = this.fields[name],
@@ -190,7 +189,7 @@ modules.define('model',
              * Очищает поля модели
              * @param {String} [name] имя поля
              * @param {Object} [opts] дополнительные парметры доступные в обработчиках событий change
-             * @returns {BEM.MODEL}
+             * @returns {MODEL}
              */
             clear: function(name, opts) {
                 if (typeof name === 'string') {
@@ -213,7 +212,7 @@ modules.define('model',
              * Задает поля модели по данным из объекта, генерирует событие update на модели
              * @param {Object} data данные устанавливаемые в модели
              * @param {Object} [opts] доп. параметры
-             * @returns {BEM.MODEL}
+             * @returns {MODEL}
              */
             update: function(data, opts) {
                 var _this = this;
@@ -245,7 +244,7 @@ modules.define('model',
                     return this.fields[name].isEmpty();
                 } else {
                     var isEmpty = true;
-                    objects.each(this.fields, function(field, fieldName) {
+                    objects.each(this.fields, function(field) {
                         isEmpty &= field.isEmpty();
                     });
 
@@ -263,7 +262,7 @@ modules.define('model',
                     return this.fields[name].isChanged();
                 } else {
                     var isChanged = false;
-                    objects.each(this.fields, function(field, fieldName) {
+                    objects.each(this.fields, function(field) {
                         isChanged |= field.isChanged();
                     });
 
@@ -284,7 +283,7 @@ modules.define('model',
             /**
              * Кеширует значения полей модели, генерирует событие fix на модели
              * @param {Object} [opts] доп. параметры
-             * @returns {BEM.MODEL}
+             * @returns {MODEL}
              */
             fix: function(opts) {
                 objects.each(this.fields, function(field) {
@@ -300,7 +299,7 @@ modules.define('model',
              * Восстанавливает значения полей модели из кеша, генерирует событие update на модели
              * @param {Object} [name] имя поля
              * @param {Object} [opts] доп. параметры
-             * @returns {BEM.MODEL}
+             * @returns {MODEL}
              */
             rollback: function(name, opts) {
                 if (typeof name === 'string') {
@@ -355,7 +354,7 @@ modules.define('model',
              * @param {Object} [data] дополнительные данные события
              * @param {Function} fn обработчик события
              * @param {Object} ctx контекст вызова обработчика
-             * @returns {BEM.MODEL}
+             * @returns {MODEL}
              */
             on: function(field, e, data, fn, ctx) {
                 if (functions.isFunction(e)) {
@@ -381,7 +380,7 @@ modules.define('model',
              * @param {String} e имя события
              * @param {Function} fn обработчик события
              * @param {Object} ctx контекст вызова обработчика
-             * @returns {BEM.MODEL}
+             * @returns {MODEL}
              */
             un: function(field, e, fn, ctx) {
                 if (functions.isFunction(e)) {
@@ -411,7 +410,7 @@ modules.define('model',
              * @param {String} [field] имя поля
              * @param {String} e имя события
              * @param {*} [data] данные доступные в обработчике события
-             * @returns {BEM.MODEL}
+             * @returns {MODEL}
              */
             trigger: function(field, e, data) {
                 if (!(typeof field == 'string' && typeof e == 'string')) {
@@ -433,7 +432,7 @@ modules.define('model',
              * Тригерит (с декоратором throttle) событие change на модели при изменении полей
              * @param {String} name имя поля
              * @param {Object} opts доп. параметры
-             * @returns {BEM.MODEL}
+             * @returns {MODEL}
              * @private
              */
             _onFieldChange: function(name, opts) {
@@ -516,14 +515,14 @@ modules.define('model',
 
             /**
              * Сравнивает значение модели с переданным значением
-             * @param {BEM.MODEL|Object} val модель или хеш
+             * @param {MODEL|Object} val модель или хеш
              * @returns {boolean}
              */
             isEqual: function(val) {
 
                 if (!val) return false;
 
-                var isComparingValueModel = val instanceof BEM.MODEL,
+                var isComparingValueModel = val instanceof MODEL,
                     selfFieldNames = Object.keys(this.fields),
                     fieldNamesToCompare = Object.keys(isComparingValueModel ? val.fields : val);
 
@@ -534,7 +533,7 @@ modules.define('model',
                 }, this);
             }
 
-        }, /** @lends BEM.MODEL */{
+        }, /** @lends MODEL */{
 
             /**
              * Хранилище классов моделей
@@ -581,13 +580,13 @@ modules.define('model',
          * }
              *
              * @static
-             * @protected
+             * @public
              * @param {String|Object} decl
              * @param {String} decl.model|decl.name
              * @param {String} [decl.baseModel]
              * @param {Object} fields где ключ имя поля, значение строка с типом или объект вида
-             * @param {Object} protoProps Прототипные методы и поля
-             * @param {Object} staticProps Статические методы и поля
+             * @param {Object} [protoProps] Прототипные методы и поля
+             * @param {Object} [staticProps] Статические методы и поля
              */
             decl: function(decl, fields, protoProps, staticProps) {
                 if (typeof decl == 'string') {
@@ -703,7 +702,7 @@ modules.define('model',
              * @param {Object} [modelParams.parentModel] экземпляр родительской модели
              * @param {Object} [data] данные, которыми будет проинициализирована модель
              * @param {Object} [opts] дополнительные данные передаваемые в событие
-             * @returns {BEM.MODEL}
+             * @returns {MODEL}
              */
             create: function(modelParams, data, opts) {
                 if (typeof modelParams === 'string') modelParams = { name: modelParams };
@@ -755,7 +754,7 @@ modules.define('model',
              * @param {String} [modelParams.parentPath] путь родительской модели
              * @param {Object} [modelParams.parentModel] экземпляр родительской модели
              * @param {Boolean} [dropCache] Не брать значения из кеша
-             * @returns {BEM.MODEL[]|Array}
+             * @returns {MODEL[]|Array}
              */
             get: function(modelParams, dropCache) {
                 if (typeof modelParams == 'string') modelParams = { name: modelParams };
@@ -794,8 +793,8 @@ modules.define('model',
             /**
              * Возвращает экземпляр модели по имени или пути
              * @param {Object|String} modelParams @see get.modelParams
-             * @param {Boolean} dropCache @see get.dropCache
-             * @returns {BEM.MODEL|undefined}
+             * @param {Boolean} [dropCache] @see get.dropCache
+             * @returns {MODEL|undefined}
              */
             getOne: function(modelParams, dropCache) {
                 return this.get(modelParams, dropCache).pop();
@@ -805,7 +804,7 @@ modules.define('model',
              * Возвращает созданный или создает экземпляр модели
              * @param {Object|String} modelParams @see get.modelParams
              * @param {Object} [opts] дополнительные данные для события
-             * @returns {BEM.MODEL|undefined}
+             * @returns {MODEL|undefined}
              */
             getOrCreate: function(modelParams, opts) {
                 if (typeof modelParams === 'string') modelParams = { name: modelParams };
@@ -823,7 +822,7 @@ modules.define('model',
              * @param {String} e имя события
              * @param {Function} fn обработчик события
              * @param {Object} [ctx] контекст выполнения обработчика
-             * @returns {BEM.MODEL}
+             * @returns {MODEL}
              */
             on: function(modelParams, field, e, fn, ctx) {
                 if (functions.isFunction(e)) {
@@ -866,7 +865,7 @@ modules.define('model',
              * @param {String} e имя события
              * @param {Function} fn обработчик события
              * @param {Object} [ctx] контекст выполнения обработчика
-             * @returns {BEM.MODEL}
+             * @returns {MODEL}
              */
             un: function(modelParams, field, e, fn, ctx) {
                 if (functions.isFunction(e)) {
@@ -921,7 +920,7 @@ modules.define('model',
              * @param {String} [field] имя поля
              * @param {String} e имя события
              * @param {Object} [data] данные передаваемые в обработчик события
-             * @returns {BEM.MODEL}
+             * @returns {MODEL}
              */
             trigger: function(modelParams, field, e, data) {
                 if (!(typeof field == 'string' && typeof e == 'string')) {
@@ -943,8 +942,8 @@ modules.define('model',
 
             /**
              * Назначает глобальные обработчики событий на экземпляр модели
-             * @param {BEM.MODEL} model экземпляр модели
-             * @returns {BEM.MODEL}
+             * @param {MODEL} model экземпляр модели
+             * @returns {MODEL}
              * @private
              */
             _bindToModel: function(model) {
@@ -953,8 +952,8 @@ modules.define('model',
 
             /**
              * Назначает глобальные обработчики событий на поля экземпляра модели
-             * @param {BEM.MODEL} model экземпляр модели
-             * @returns {BEM.MODEL}
+             * @param {MODEL} model экземпляр модели
+             * @returns {MODEL}
              * @private
              */
             _bindToFields: function(model) {
@@ -972,9 +971,9 @@ modules.define('model',
 
             /**
              * Хелпер навешивания событий на экземпляр модели
-             * @param {BEM.MODEL} model экземпляр модели
+             * @param {MODEL} model экземпляр модели
              * @param {Object} events события
-             * @returns {BEM.MODEL}
+             * @returns {MODEL}
              * @private
              */
             _bindToEvents: function(model, events) {
@@ -996,8 +995,8 @@ modules.define('model',
             /**
              * Добавляет модель в хранилище
              * @private
-             * @param {BEM.MODEL} model экземпляр модели
-             * @returns {BEM.MODEL}
+             * @param {MODEL} model экземпляр модели
+             * @returns {MODEL}
              * @private
              */
             _addModel: function(model) {
@@ -1014,8 +1013,8 @@ modules.define('model',
 
             /**
              * Уничтожает экземпляр модели, удаляет его из хранилища
-             * @param {BEM.MODEL|String|Object} modelParams Модель, имя модели или параметры описываеющие path модели
-             * @returns {BEM.MODEL}
+             * @param {MODEL|String|Object} modelParams Модель, имя модели или параметры описываеющие path модели
+             * @returns {MODEL}
              */
             destruct: function(modelParams) {
                 if (typeof modelParams == 'string') modelParams = { name: modelParams };
@@ -1051,12 +1050,12 @@ modules.define('model',
              * @param {String} [pathParts.parentName] имя родитеской модели
              * @param {String|Number} [pathParts.parentId] идентификатор родительской модели
              * @param {String|Object} [pathParts.parentPath] путь родительской модели
-             * @param {BEM.MODEL} [pathParts.parentModel] экземпляр родительской модели
+             * @param {MODEL} [pathParts.parentModel] экземпляр родительской модели
              *
              * @param {String} [pathParts.childName] имя дочерней модели
              * @param {String|Number} [pathParts.childId] идентификатор дочерней модели
              * @param {String|Object} [pathParts.childPath] путь дочерней модели
-             * @param {BEM.MODEL} [pathParts.childModel] экземпляр дочерней модели
+             * @param {MODEL} [pathParts.childModel] экземпляр дочерней модели
              * @returns {String}
              */
             buildPath: function(pathParts) {
@@ -1098,7 +1097,7 @@ modules.define('model',
              * @param {Function} callback ф-ия выполняемая для каждой модели
              * @param {String|Object} modelParams параметры модели
              * @param {Boolean} [dropCache] Не брать значения из кеша
-             * @returns {BEM.MODEL}
+             * @returns {MODEL}
              */
             forEachModel: function(callback, modelParams, dropCache) {
                 var modelsByPath = MODEL.get(modelParams, dropCache);

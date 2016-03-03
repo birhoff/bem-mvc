@@ -3,7 +3,7 @@ BEM.TEST.decl('i-model__field_type_model-list', function() {
     describe('Field with type "model-list"', function() {
         BEM.MODEL.decl('model-list-type-field', {
             list: {
-                type: 'models-list',
+                type: 'collection',
                 modelName: 'list-inner-model',
                 validation: {
                     rules: {
@@ -373,7 +373,7 @@ BEM.TEST.decl('i-model__field_type_model-list', function() {
             it('should not be changed after create when inner models have internal fields', function() {
                 BEM.MODEL.decl('list-with-internal-field', {
                     list: {
-                        type: 'models-list',
+                        type: 'collection',
                         modelName: 'model-with-internal-field'
                     }
                 });

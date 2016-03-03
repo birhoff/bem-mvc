@@ -22,7 +22,7 @@ describe('i-model__field_type_models-list', function() {
 
         BEM.MODEL.decl('model', {
             list: {
-                type: 'models-list',
+                type: 'collection',
                 modelName: 'item'
             }
         });
@@ -46,11 +46,11 @@ describe('i-model__field_type_models-list', function() {
 
             BEM.MODEL.decl('model', {
                 list1: {
-                    type: 'models-list',
+                    type: 'collection',
                     modelName: 'item-model'
                 },
                 list2: {
-                    type: 'models-list',
+                    type: 'collection',
                     modelName: 'item-model'
                 }
             });

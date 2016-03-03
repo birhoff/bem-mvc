@@ -1,7 +1,7 @@
 BEM.MODEL.decl('todos', {
 
     list: {
-        type: 'models-list',
+        type: 'collection',
         modelName: 'todo-item'
     },
 

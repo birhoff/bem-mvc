@@ -16,7 +16,7 @@
                     'boolean',
                     'model',
                     'array',
-                    'models-list'
+                    'collection'
                 ]
             }
         }
