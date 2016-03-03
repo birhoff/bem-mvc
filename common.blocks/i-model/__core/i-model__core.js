@@ -16,7 +16,7 @@ modules.define('model',
              */
             MODEL;
 
-        MODEL = inherit(events.EventEmitter, {
+        MODEL = inherit(events.Emitter, {
 
             /**
              * Минимальное время между событиями на модели
@@ -53,7 +53,7 @@ modules.define('model',
                  * @type {*}
                  */
                 this.debounceTrigger = debounce(function(name, data) {
-                    this.trigger(name, data);
+                    this.emit(name, data);
                 }, this.changesTimeout, false, this);
 
                 this._initFields(data || {});
@@ -103,7 +103,7 @@ modules.define('model',
                     field.initData(typeof data[name] !== 'undefined' ? data[name] : fieldDecl.value);
                 });
 
-                this.trigger('init');
+                this.emit('init');
 
                 return this;
             },
@@ -204,7 +204,7 @@ modules.define('model',
                     }.bind(this));
                 }
 
-                this.trigger('clear', opts);
+                this.emit('clear', opts);
 
                 return this;
             },
@@ -222,7 +222,7 @@ modules.define('model',
                     _this.set(name, val, opts);
                 });
 
-                this.trigger('update', opts);
+                this.emit('update', opts);
 
                 return this;
             },
@@ -291,7 +291,7 @@ modules.define('model',
                     field.fixData(opts);
                 });
 
-                this.trigger('fix', opts);
+                this.emit('fix', opts);
 
                 return this;
             },
@@ -313,7 +313,7 @@ modules.define('model',
                     });
                 }
 
-                this.trigger('rollback', opts);
+                this.emit('rollback', opts);
 
                 return this;
             },
@@ -423,7 +423,7 @@ modules.define('model',
                 !field ?
                     this.__base(e, data) :
                     field.split(' ').forEach(function(name) {
-                        this.fields[name].trigger(e, data);
+                        this.fields[name].emit(e, data);
                     }, this);
 
                 return this;
@@ -450,7 +450,7 @@ modules.define('model',
              * @private
              */
             _fireChange: function(opts) {
-                this.trigger('change', objects.extend({}, opts, { changedFields: this.changed }));
+                this.emit('change', objects.extend({}, opts, { changedFields: this.changed }));
                 this.changed = [];
             },
 
@@ -506,10 +506,10 @@ modules.define('model',
                 if (!res.errors) {
                     res.valid = true;
                 } else {
-                    this.trigger('error', res);
+                    this.emit('error', res);
                 }
 
-                this.trigger('validated', res);
+                this.emit('validated', res);
 
                 return res;
             },
@@ -534,7 +534,7 @@ modules.define('model',
                 }, this);
             }
 
-        }, /** @lends BEM.MODEL */ {
+        }, /** @lends BEM.MODEL */{
 
             /**
              * Хранилище классов моделей
@@ -738,7 +738,7 @@ modules.define('model',
                     model = new modelConstructor(modelParams, data);
 
                 MODEL._addModel(model);
-                model.trigger('create', objects.extend({}, opts, { model: model }));
+                model.emit('create', objects.extend({}, opts, { model: model }));
 
                 return model;
             },
@@ -934,7 +934,7 @@ modules.define('model',
 
                 e.split(' ').forEach(function(event) {
                     MODEL.forEachModel(function() {
-                        this.trigger(field, event, data);
+                        this.emit(field, event, data);
                     }, modelParams, true);
                 });
 
@@ -1034,7 +1034,7 @@ modules.define('model',
                     });
 
                     MODEL._modelsStorage[this.name][this.path()] = null;
-                    this.trigger('destruct', { model: this });
+                    this.emit('destruct', { model: this });
                 }, modelParams, true);
 
                 modelsGroupsCache[modelParams.name] = null;

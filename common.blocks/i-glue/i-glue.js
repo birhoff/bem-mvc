@@ -1,4 +1,4 @@
-modules.define('i-glue', ['i-bem__dom', 'objects', 'jquery', 'i-model'],
+modules.define('i-glue', ['i-bem__dom', 'objects', 'jquery', 'model'],
 function(provide, BEMDOM, objects, $, MODEL) {
 
 /**

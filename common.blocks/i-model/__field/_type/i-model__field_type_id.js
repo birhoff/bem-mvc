@@ -1,16 +1,12 @@
-modules.define(
-    'model',
-    ['inherit'],
-    function(provide, inherit, MODEL) {
+modules.define('model', ['inherit'], function(provide, inherit, MODEL) {
 
-        MODEL.FIELD.types.id = inherit(MODEL.FIELD, {
+    MODEL.FIELD.types.id = inherit(MODEL.FIELD, {
 
-            isEmpty: function() {
-                return true;
-            }
-
-        });
-
-        provide(MODEL);
+        isEmpty: function() {
+            return true;
+        }
 
     });
+
+    provide(MODEL);
+});

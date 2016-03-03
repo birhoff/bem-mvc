@@ -1,12 +1,6 @@
-(function(BEM) {
-    var MODEL = BEM.MODEL,
-        objects = MODEL._utils.objects;
+modules.define('model', ['inherit', 'objects'], function(provide, inherit, objects, MODEL) {
 
-    /**
-     * Реализация внутреннего хранилища обработчиков событий
-     */
-    MODEL.FIELD.decl('inner-events-storage', {
-
+    MODEL.FIELD.types['inner-events-storage'] = inherit(MODEL.FIELD, {
         /**
          * @class Конструктор поля модели
          * @constructs
@@ -83,6 +77,7 @@
                 });
             });
         }
-
     });
-})(BEM);
+
+    provide(MODEL);
+});

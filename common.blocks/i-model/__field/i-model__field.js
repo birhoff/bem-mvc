@@ -6,7 +6,7 @@ modules.define(
          * @namespace
          * @name BEM.MODEL.FIELD
          */
-        MODEL.FIELD = inherit(events.EventEmitter, {
+        MODEL.FIELD = inherit(events.Emitter, {
 
             /**
              * @class Конструктор поля модели
@@ -35,8 +35,8 @@ modules.define(
             _trigger: function(event, opts) {
                 opts = objects.extend({}, opts, { field: this.name });
 
-                this.model.trigger('field-' + event, opts);
-                this.trigger(event, opts);
+                this.model.emit('field-' + event, opts);
+                this.emit(event, opts);
 
                 return this;
             },
@@ -385,7 +385,7 @@ modules.define(
 
             /**
              * Декларирует новый тип поля
-             * @param {String} type
+             * @param {String||Object} type
              * @param {Object} fieldDecl
              * @returns {*}
              */
@@ -414,4 +414,6 @@ modules.define(
             }
 
         });
+
+        provide(MODEL);
     });

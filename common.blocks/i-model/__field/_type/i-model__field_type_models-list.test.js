@@ -321,15 +321,15 @@ BEM.TEST.decl('i-model__field_type_model-list', function() {
                 onCustomDeactive = jasmine.createSpy('onCustomDeactive');
 
             model.on('list', 'custom-event', onCustom);
-            model.get('list').getByIndex(0).trigger('custom-event');
+            model.get('list').getByIndex(0).emit('custom-event');
 
             model.on('list', 'new-custom-event', onNewCustom);
-            model.get('list').add({ id: 3, f: 'f3' }).trigger('new-custom-event');
+            model.get('list').add({ id: 3, f: 'f3' }).emit('new-custom-event');
 
             model.on('list', 'deact-custom-event', onCustomDeactive);
             model.un('list', 'deact-custom-event', onCustomDeactive);
-            model.get('list').getByIndex(0).trigger('deact-custom-event');
-            model.get('list').add({ id: 4, f: 'f4' }).trigger('deact-custom-event');
+            model.get('list').getByIndex(0).emit('deact-custom-event');
+            model.get('list').add({ id: 4, f: 'f4' }).emit('deact-custom-event');
 
             expect(onCustom.calls.length).toEqual(1);
             expect(onNewCustom.calls.length).toEqual(1);

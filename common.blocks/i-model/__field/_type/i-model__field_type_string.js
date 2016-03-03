@@ -1,31 +1,36 @@
-(function(BEM) {
-    var MODEL = BEM.MODEL,
-        objects = MODEL._utils.objects;
+modules.define(
+    'model',
+    ['inherit', 'objects'],
+    function(provide, inherit, objects, MODEL) {
 
-    MODEL.FIELD.decl('string', {
 
-        /**
-         * Значение по умолчанию пустая строка
-         */
-        _default: '',
+        MODEL.FIELD.types.string = inherit(MODEL.FIELD, {
 
-        /**
-         * Правила валидации для поля типа string
-         * @private
-         */
-        _getValidationRules: function() {
-            var maxLength = {
-                value: Infinity,
-                validate: function(curValue, ruleValue, name) {
-                    return curValue && curValue.length <= ruleValue;
-                }
-            };
+            /**
+             * Значение по умолчанию пустая строка
+             */
+            _default: '',
 
-            return objects.extend(this._commonRules(), {
-                maxlength: maxLength,
-                maxLength: maxLength
-            })
-        }
+            /**
+             * Правила валидации для поля типа string
+             * @private
+             */
+            _getValidationRules: function() {
+                var maxLength = {
+                    value: Infinity,
+                    validate: function(curValue, ruleValue, name) {
+                        return curValue.length <= ruleValue;
+                    }
+                };
+
+                return objects.extend(this._commonRules(), {
+                    maxlength: maxLength,
+                    maxLength: maxLength
+                })
+            }
+
+        });
+
+        provide(MODEL);
 
     });
-})(BEM);

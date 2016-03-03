@@ -238,13 +238,13 @@ BEM.TEST.decl('i-model__field_type_model', function() {
                 onNewCustom = jasmine.createSpy('onNewCustom');
 
             model.on('f', 'custom-event', onCustom);
-            model.get('f').trigger('custom-event');
+            model.get('f').emit('custom-event');
 
             var newInner = BEM.MODEL.create('inner-model', { innerF: 'str1' });
 
             model.on('f', 'new-custom-event', onNewCustom);
             model.set('f', newInner);
-            newInner.trigger('new-custom-event');
+            newInner.emit('new-custom-event');
 
             var model2 = BEM.MODEL.create('model-type-field', {
                 f: {
@@ -252,7 +252,7 @@ BEM.TEST.decl('i-model__field_type_model', function() {
                 }
             });
 
-            model2.get('f').trigger('custom-event');
+            model2.get('f').emit('custom-event');
 
             model.destruct();
             model2.destruct();

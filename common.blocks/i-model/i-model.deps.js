@@ -1,6 +1,4 @@
 ({
-    mustDeps: [
-    ],
     shouldDeps: [
         {
             block: 'functions',
@@ -23,4 +21,4 @@
             }
         }
     ]
-})
+});

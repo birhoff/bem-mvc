@@ -283,7 +283,7 @@ BEM.TEST.decl('i-model', function() {
 
         subModel.set('field', 123);
 
-        model1.trigger('custom-event');
+        model1.emit('custom-event');
     });
 
     //todo: написать тест на валидацию по максимально развернутой схеме
@@ -368,7 +368,7 @@ BEM.TEST.decl('i-model', function() {
                 .un('change', disabledHandler);
 
 
-            BEM.MODEL.trigger('model-for-trigger', 'f1', 'change');
+            BEM.MODEL.emit('model-for-trigger', 'f1', 'change');
 
             expect(onModelChange).not.toHaveBeenCalled(); // событие на поле не всплывёт после .trigger только после set
 
@@ -394,7 +394,7 @@ BEM.TEST.decl('i-model', function() {
                 .un('change', disabledHandler);
 
 
-            BEM.MODEL.trigger(modelParams, 'f1', 'change');
+            BEM.MODEL.emit(modelParams, 'f1', 'change');
 
             expect(onModelChange).not.toHaveBeenCalled(); // событие на поле не всплывёт после .trigger только после set
 
