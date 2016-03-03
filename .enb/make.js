@@ -28,8 +28,13 @@ module.exports = function(config) {
                 filesTarget : '?.bemhtml.files',
                 dirsTarget : '?.bemhtml.dirs'
             }],
-            [require('enb-roole/techs/css-roole'), { target : '?.noprefix.css' }],
-            [require('enb-diverse-js/techs/browser-js')],
+            [require('enb-stylus/techs/stylus'), {
+                target: '?.css',
+                autoprefixer: {
+                    browsers: ['ie >= 10', 'last 2 versions', 'opera 12.1', '> 2%']
+                }
+            }],
+            [require('enb-js/techs/browser-js')],
             [require('enb-bemxjst/techs/bemhtml-old'), { devMode : false }],
             [require('enb-bemxjst/techs/bemhtml-old'), {
                 target : '?.browser.bemhtml.js',
@@ -61,12 +66,7 @@ module.exports = function(config) {
         }
 
         nodeConfig.addTechs([
-            [require('enb/techs/levels'), { levels : levels }],
-            [require('enb-autoprefixer/techs/css-autoprefixer'), {
-                sourceTarget : '?.noprefix.css',
-                destTarget : '?.css',
-                browserSupport : getDesktopBrowsers()
-            }]
+            [require('enb/techs/levels'), { levels : levels }]
         ]);
     });
 
